@@ -11,8 +11,8 @@
     <header class="container d-flex justify-content-center pt-2">
         <nav class="py-2 px-5 bg-primary rounded-pill">  
             <ul class="d-flex w-100 h-100 d-lg-flex justify-content-center align-items-center gap-4  p-0">
-                <li class="nav-link"><a class="text-white fw-semibold text-decoration-none" href="index.html">Register</a></li>
-                <li class="nav-link"><a class="text-white fw-semibold text-decoration-none active" href="user.html">Users</a></li>
+                <li class="nav-link"><a class="text-white fw-semibold text-decoration-none" href="index.php">Register</a></li>
+                <li class="nav-link"><a class="text-white fw-semibold text-decoration-none active" href="user.php">Users</a></li>
             </ul>
         </nav>
     </header>
@@ -30,12 +30,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>007</td>
-                    <td>Tinfy</td>
-                    <td>tinfy007@gmail.com</td>
-                    <td>12345</td>
-                    <td>...</td>
+                <?php
+                    include 'db.php';
+                    $query = "SELECT * FROM tbl_user";
+                    $res = mysqli_query($conn,$query);
+
+                    if(mysqli_num_rows($res)>0){
+                        foreach($res as $row){
+                        ?>
+                            <tr>
+                    <td><?= $row['id'] ?></td>
+                    <td><?= $row['name'] ?></td>
+                    <td><?= $row['email'] ?></td>
+                    <td><?= $row['pass'] ?></td>
+                    <td><?= $row['cr_date'] ?></td>
                     <td>
                         <article class="d-flex justify-content-center gap-3">
                             <a href="#" class="btn btn-warning d-flex gap-1 justify-content-center align-items-center">
@@ -54,6 +62,18 @@
                         </article>
                     </td>
                 </tr>
+                        <?php
+                        }
+                    } else {
+                        ?> 
+                        <tr>
+                            <td colspan="6">
+                                <span class="text-secondary">No information found!</span>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                ?>
             </tbody>
         </table>
     </main>

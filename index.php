@@ -11,18 +11,33 @@
     <header class="container d-flex justify-content-center pt-2">
         <nav class="py-2 px-5 bg-primary rounded-pill">  
             <ul class="d-flex w-100 h-100 d-lg-flex justify-content-center align-items-center gap-4  p-0">
-                <li class="nav-link"><a class="text-white fw-semibold text-decoration-none active" href="index.html">Register</a></li>
-                <li class="nav-link"><a class="text-white fw-semibold text-decoration-none" href="user.html">Users</a></li>
+                <li class="nav-link"><a class="text-white fw-semibold text-decoration-none active" href="index.php">Register</a></li>
+                <li class="nav-link"><a class="text-white fw-semibold text-decoration-none" href="user.php">Users</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="container pt-5">
-        <form action="" class="col-5 mt-5 container shadow p-5 rounded-4" method="">
+        <form action="insert.php" class="col-5 mt-5 container shadow p-5 rounded-4" method="post">
         <div class="mb-3 text-center ">
             <h3>Register Form</h3>
             <p class="text-secondary">Register with us for making a bright.</p>
         </div>
+        <?php 
+            session_start();
+            if(isset($_SESSION['msg'])){
+        ?>
+        <div class="mb-3">
+            <div class="card <?= $_SESSION['isSuccess'] ? 'bg-success':'bg-danger' ?>">
+                <div class="card-body text-light fw-semibold">
+                    <?= $_SESSION['msg'] ?>
+                </div>
+            </div>
+        </div>
+        <?php }
+            unset($_SESSION['msg']);
+            unset($_SESSION['isSuccess']);
+        ?>
         <div class="mb-3">
             <label for="name" class="form-label">User Name <span class="text-danger">*</span></label>
             <input type="text" class="form-control" placeholder="Name..." id="name" name="name">
@@ -40,7 +55,7 @@
             <label for="cpw" class="form-label">Confirm Password <span class="text-danger">*</span></label>
             <input type="password" class="form-control" placeholder="########" id="cpw" name="cpass">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" name="submitBtn" class="btn btn-primary">Submit</button>
         </form>
     </main>
 </body>
